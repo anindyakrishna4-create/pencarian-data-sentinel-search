@@ -1,4 +1,4 @@
-# File: app.py (Aplikasi Streamlit dengan Matplotlib)
+# File: app.py (Revisi Final Sentinel Search - Tanpa Kode Heksadesimal di Penjelasan)
 
 import streamlit as st
 import pandas as pd
@@ -39,20 +39,23 @@ except ValueError:
     st.error("Pastikan semua input data dan target adalah angka (integer) yang dipisahkan oleh koma.")
     st.stop()
 
-# --- Penjelasan Pewarnaan ---
+# ----------------------------------------------------------------------
+# --- BAGIAN REVISI: Hapus Kode Heksadesimal dari Penjelasan ---
+# ----------------------------------------------------------------------
 st.markdown("""
 #### Pewarnaan Bar:
-* **Ungu (#8E44AD):** Posisi **Sentinel** (Nilai target sementara).
+* **Ungu:** Posisi **Sentinel** (Nilai target sementara).
 * **Kuning:** Indeks yang **sedang dicek** pada langkah ini.
 * **Hijau:** Indeks di mana nilai **ditemukan**.
 * **Merah:** Indeks yang **sudah dicek** dan bukan target.
 * **Biru:** Indeks yang **belum dicek**.
 """)
+# ----------------------------------------------------------------------
 
 st.write(f"**Array Awal:** {initial_data}")
 st.write(f"**Nilai Target:** **{target_value}**")
 
-# --- Fungsi Plot Matplotlib ---
+# --- Fungsi Plot Matplotlib (Menggunakan Warna Internal) ---
 def plot_array(arr, target, current_index, found_index, max_val, status):
     fig, ax = plt.subplots(figsize=(10, 4))
     n = len(arr)
@@ -65,19 +68,19 @@ def plot_array(arr, target, current_index, found_index, max_val, status):
     sentinel_idx = n - 1
     
     for i in range(n):
-        # Ungu (Posisi Sentinel)
+        # Ungu (#8E44AD): Posisi Sentinel
         if i == sentinel_idx:
             colors[i] = '#8E44AD'
         
-        # Merah (Sudah Dicek tapi Bukan Target)
+        # Merah (#CC0000): Sudah Dicek tapi Bukan Target
         if status not in ('Mulai', 'Inisialisasi', 'Selesai') and i < current_index:
             colors[i] = '#CC0000'
 
-        # Kuning (Sedang Dicek)
+        # Kuning (#F1C232): Sedang Dicek
         if status == 'Mengecek' and i == current_index:
             colors[i] = '#F1C232'
         
-        # Hijau (Ditemukan)
+        # Hijau (#6AA84F): Ditemukan
         if found_index != -1 and i == found_index:
             colors[i] = '#6AA84F'
             # Jika ditemukan, warna sentinel kembali biru, kecuali di posisi itu sendiri
